@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String     @id @default(uuid())
+  name          String?
+  email         String     @unique
+  password      String
+  
+  // Atributos para ABAC
+  role          String     @default("USER")
+  department    String    
+  clearance     Int        @default(1)
+  status        Boolean 
+  
+  // Relacionamentos
+  documents     Document[] @relation("UserDocuments")
+  
+  // Auditoria (LGPD)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model Document {
+  id              String   @id @default(uuid())
+  title           String
+  contentUrl      String   
+  fileHash        String 
+  
+  // Atributos de Segurança para o ABAC
+  securityLevel   Int      @default(1) // Nível exigido para ver este arquivo
+  department      String? 
+  classification  Boolean  @default(false)
+  
+  // Propriedade
+  authorId        String
+  author          User     @relation("UserDocuments", fields: [authorId], references: [id])
+
+  // Auditoria e Gestão de Riscos (Requisito da Vaga)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime? // Soft delete para governança
+}
