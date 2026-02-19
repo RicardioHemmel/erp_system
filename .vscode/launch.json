@@ -2,22 +2,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Nx Nest Jest Test",
       "type": "node",
       "request": "launch",
-      "name": "Debug api with Nx",
-      "runtimeExecutable": "pnpm exec",
-      "runtimeArgs": ["nx", "serve", "api"],
-      "env": {
-        "NODE_OPTIONS": "--inspect=9229"
-      },
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "nx",
+        "test",
+        "api",
+        "--args=\"--testPathPatterns=${fileBasenameNoExtension} --runInBand\"",
+        "--skip-nx-cache"
+      ],
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "skipFiles": ["<node_internals>/**"],
-      "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/api/dist/**/*.(m|c|)js",
-        "!**/node_modules/**"
-      ]
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"]
     }
   ]
 }

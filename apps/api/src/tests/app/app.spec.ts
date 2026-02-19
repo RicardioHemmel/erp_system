@@ -8,6 +8,7 @@ describe('General API', () => {
   let app: INestApplication;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let server: any;
+  let teste = 2;
 
   async function setup() {
     const module = await Test.createTestingModule({
@@ -20,6 +21,8 @@ describe('General API', () => {
     await app.init();
     server = app.getHttpServer();
   }
+
+  teste = teste + 1;
 
   beforeAll(async () => {
     await setup();
