@@ -1,4 +1,4 @@
-const nextJest = require('next/jest.js');
+import nextJest from 'next/jest.js';
 
 const createJestConfig = nextJest({
   dir: './',
@@ -13,6 +13,7 @@ const config = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/apps/web',
   testEnvironment: 'jsdom',
+  forceExit: true,
 };
 
 module.exports = createJestConfig(config);
